@@ -10,10 +10,6 @@
             <label>Title</label>
             <input v-model="titleText" type='text' ref='title' defaultValue="">
           </div>
-          <div class='field'>
-            <label>Project</label>
-            <input v-model="projectText" type='text' ref='project' defaultValue="">
-          </div>
           <div class='ui two button attached buttons'>
             <button class='ui basic blue button' v-on:click="sendForm">
               Create
