@@ -1,18 +1,19 @@
 <template>
   <div class="weekly">
     <h1 class="centered">{{ msg }}</h1>
+    <router-view/>
     <div class="ui stackable very relaxed grid container">
       <div class="three column computer one column mobile row">
         <div class="four wide column">
           <div class="ui vertical menu">
-            <div class="active teal item">
+            <router-link to="/todos/home" class="active teal item">
               Home
               <div class="ui teal label">3</div>
-            </div>
-            <a class="item">
+            </router-link>
+            <router-link to="/todos/work" class="item">
               Work
               <div class="ui label">1</div>
-            </a>
+            </router-link>
             <div class="item">
               <div class="ui transparent icon input">
                 <input type="text" placeholder="Search TODOS...">
@@ -22,8 +23,7 @@
           </div>
         </div>
         <div class="twelve wide column">
-          <todo-list v-bind:todos="todosBy('Home')"></todo-list>
-          <todo-list v-bind:todos="todosBy('Work')"></todo-list>
+          <todo-list v-bind:todos="projectTodos()"></todo-list>
           <create-todo v-on:add-todo="addTodo"></create-todo>
         </div>
       </div>
@@ -37,6 +37,7 @@ import CreateTodo from '@/components/CreateTodo';
 
 export default {
   name: 'Home',
+  props: ['project'],
   data() {
     return {
       msg: 'Welcome to Your Week',
@@ -63,8 +64,8 @@ export default {
     addTodo(todo) {
       this.todos.push(todo);
     },
-    todosBy(project) {
-      return this.todos.filter(todo => todo.project === project);
+    projectTodos() {
+      return this.todos.filter(todo => todo.project.toLowerCase() === this.project.toLowerCase());
     },
   },
   components: {

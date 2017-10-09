@@ -8,7 +8,13 @@ export default new Router({
   routes: [
     {
       path: '/',
+      redirect: '/todos/home',
+    },
+    {
+      path: '/todos/:project',
+      name: 'home',
       component: Home,
+      props: true,
     },
   ],
 });

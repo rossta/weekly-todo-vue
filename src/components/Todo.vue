@@ -14,7 +14,7 @@
         <input type="text" v-model="todo.title" />
       </div>
 
-      <div class="complete table-item" v-show="!isEditing">
+      <div class="modify table-item" v-show="!isEditing">
         <div class="ui blue basic button" v-show="todo.done" v-on:click="resetTodo" >
           Completed
         </div>
@@ -23,7 +23,7 @@
         </div>
       </div>
 
-      <div class="ui form table-item" v-show="isEditing">
+      <div class="ui form modify table-item" v-show="isEditing">
         <button class="ui basic green button" v-on:click="hideForm">Done</button>
         <button class="ui basic red button" v-on:click="cancelForm">Cancel &times;</button>
       </div>
@@ -94,10 +94,17 @@
     padding-right: 1em;
   }
   .table-item.title {
-    flex-grow: 4;
+    flex-grow: 6;
+  }
+  .table-item.modify {
+    flex-grow: 3;
   }
   .table-item.day {
-    flex: 0 0 50px;
+    flex: 0 0 35px;
+    justify-content: center;
+  }
+  .table-item.extra {
+    flex: 0 0 20px;
     justify-content: center;
   }
 </style>
