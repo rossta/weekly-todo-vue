@@ -4,22 +4,7 @@
     <div class='ui stackable very relaxed grid container'>
       <div class='three column computer one column mobile row'>
         <div class='four wide column'>
-          <div class='ui vertical menu'>
-            <router-link to='/todos/home' class='item' active-class='active teal'>
-              Home
-              <div class='ui label'>{{pendingProjectTodosCount('Home')}}</div>
-            </router-link>
-            <router-link to='/todos/work' class='item' active-class='active teal'>
-              Work
-              <div class='ui label'>{{pendingProjectTodosCount('Work')}}</div>
-            </router-link>
-            <div class='item'>
-              <div class='ui transparent icon input'>
-                <input type='text' placeholder='Search TODOS...'>
-                <i class='search icon'></i>
-              </div>
-            </div>
-          </div>
+          <project-menu v-bind:projects='projects'></project-menu>
         </div>
         <div class='twelve wide column'>
           <todo-list v-on:delete-todo='deleteTodo' v-bind:todos='currentTodos'></todo-list>
@@ -38,8 +23,11 @@ import * as db from '@/database';
 
 import TodoList from '@/components/TodoList';
 import CreateTodo from '@/components/CreateTodo';
+import ProjectMenu from '@/components/ProjectMenu';
 
 const log = debug('app:Home');
+
+const titleize = text => text[0].toUpperCase() + text.substr(1);
 
 export default {
   name: 'Home',
@@ -62,10 +50,23 @@ export default {
     currentTodos() {
       return this.projectTodos(this.project);
     },
+
+    projects() {
+      const names = this.todos.map(todo => todo.project.toLowerCase());
+      const props = Array.from(new Set(names)).map(name => ({
+        name,
+        path: `todos/${name}`,
+        title: titleize(name),
+        pendingCount: this.pendingProjectTodosCount(name),
+      }));
+      log('projects', props);
+      return props;
+    },
   },
+
   methods: {
     addTodo(todo) {
-      const project = this.project;
+      const project = titleize(this.project);
       const newTodo = { project, ...todo };
       log('adding todo', newTodo);
       db.addTodo(newTodo);
@@ -98,6 +99,7 @@ export default {
   components: {
     TodoList,
     CreateTodo,
+    ProjectMenu,
   },
 };
 </script>

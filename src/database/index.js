@@ -23,7 +23,7 @@ export function addTodo({ title, project, done = false }) {
 }
 
 export function getTodos() {
-  return db.allDocs({ include_docs: true, descending: true });
+  return db.allDocs({ include_docs: true, descending: false });
 }
 
 export function deleteTodo(todo) {

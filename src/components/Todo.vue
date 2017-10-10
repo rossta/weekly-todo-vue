@@ -9,6 +9,8 @@
 
       <div class="title table-item" v-show="!isEditing" v-on:click="showForm">
         {{todo.title}}
+        &middot;
+        <span class="subtle">{{todo.project}}</span>
       </div>
       <div class="ui form title table-item" v-show="isEditing" v-on:keyup.enter="hideForm">
         <input type="text" v-model="todo.title" />
