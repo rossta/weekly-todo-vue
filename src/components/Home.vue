@@ -31,8 +31,15 @@
 </template>
 
 <script>
+import debug from 'debug';
+
+import * as db from '@/database';
+// import '@/database/seed';
+
 import TodoList from '@/components/TodoList';
 import CreateTodo from '@/components/CreateTodo';
+
+const log = debug('app:Home');
 
 export default {
   name: 'Home',
@@ -40,24 +47,16 @@ export default {
   data() {
     return {
       msg: 'Welcome to Your Week',
-      todos: [{
-        title: 'Todo A',
-        project: 'Home',
-        done: false,
-      }, {
-        title: 'Todo B',
-        project: 'Work',
-        done: true,
-      }, {
-        title: 'Todo C',
-        project: 'Work',
-        done: false,
-      }, {
-        title: 'Todo D',
-        project: 'Home',
-        done: false,
-      }],
+      isLoading: false,
+      todos: [],
     };
+  },
+  created() {
+    this.fetchTodos();
+    db.onChange(() => this.fetchTodos());
+  },
+  watch: {
+    $route: 'fetchTodos',
   },
   computed: {
     currentTodos() {
@@ -66,13 +65,16 @@ export default {
   },
   methods: {
     addTodo(todo) {
-      this.todos.push(todo);
+      const project = this.project;
+      const newTodo = { project, ...todo };
+      log('adding todo', newTodo);
+      db.addTodo(newTodo);
     },
 
     deleteTodo(todo) {
-      console.log('deleting todo', todo);
-      const index = this.todos.indexOf(todo);
-      this.todos.splice(index, 1);
+      return db.deleteTodo(todo).then(() => {
+        log('deleted todo', todo);
+      });
     },
 
     pendingProjectTodosCount(project) {
@@ -83,6 +85,15 @@ export default {
       return this.todos.filter(todo => todo.project.toLowerCase() === project.toLowerCase());
     },
 
+    fetchTodos() {
+      this.isLoading = true;
+
+      db.getTodos().then((doc) => {
+        const todos = doc.rows.map(row => row.doc);
+        log('fetched todos', todos);
+        this.todos = todos;
+      });
+    },
   },
   components: {
     TodoList,

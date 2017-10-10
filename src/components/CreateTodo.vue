@@ -29,7 +29,6 @@
     data() {
       return {
         titleText: '',
-        projectText: '',
         isCreating: false,
       };
     },
@@ -41,18 +40,12 @@
         this.isCreating = false;
       },
       sendForm() {
-        if (this.titleText.length && this.projectText.length) {
+        if (this.titleText.length) {
           const title = this.titleText;
-          const project = this.projectText;
 
-          this.$emit('add-todo', {
-            title,
-            project,
-            done: false,
-          });
+          this.$emit('add-todo', { title });
 
           this.titleText = '';
-          this.projectText = '';
         }
 
         this.isCreating = false;
