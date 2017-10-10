@@ -29,7 +29,7 @@
       </div>
 
       <div class="ui form modify table-item" v-show="isEditing">
-        <button class="ui basic green button icon" v-on:click="hideForm">
+        <button class="ui basic blue button icon" v-on:click="hideForm">
           <i title="Save changes" class="send icon"></i>
         </button>
         <button class="ui basic pink button icon" v-on:click="cancelForm">
@@ -83,7 +83,7 @@
   };
 </script>
 
-<style scoped>
+<style>
   .todo {
     border-bottom: 1px solid #CCC;
   }
