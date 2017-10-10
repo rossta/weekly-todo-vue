@@ -11,7 +11,7 @@
         :key="index"
         v-bind:todo="todo"
         v-bind:index="index"
-        v-on:delete-todo="deleteTodo"
+        v-on:delete-todo='deleteTodo'
         >
       </todo>
     </div>
@@ -28,8 +28,7 @@ export default {
   },
   methods: {
     deleteTodo(todo) {
-      const index = this.todos.indexOf(todo);
-      this.todos.splice(index, 1);
+      this.$emit('delete-todo', todo);
     },
   },
 };

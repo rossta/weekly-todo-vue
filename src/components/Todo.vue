@@ -1,13 +1,13 @@
 <template>
   <div class="todo">
-    <div class="table-row">
+    <div class="table-row" v-bind:class="[doneClass]">
       <div class="day table-item">M</div>
       <div class="day table-item">T</div>
       <div class="day table-item">W</div>
       <div class="day table-item">Th</div>
       <div class="day table-item">F</div>
 
-      <div class="title table-item" v-show="!isEditing" v-on:click="showForm" >
+      <div class="title table-item" v-show="!isEditing" v-on:click="showForm">
         {{todo.title}}
       </div>
       <div class="ui form title table-item" v-show="isEditing" v-on:keyup.enter="hideForm">
@@ -15,23 +15,27 @@
       </div>
 
       <div class="modify table-item" v-show="!isEditing">
-        <div class="ui blue basic button" v-show="todo.done" v-on:click="resetTodo" >
-          Completed
-        </div>
-        <div class="ui green basic button" v-show="!todo.done" v-on:click="completeTodo" >
-          Complete
-        </div>
+        <button class="ui basic gray button icon" v-show="todo.done" v-on:click="resetTodo" >
+          <i title="Completed" class="checkmark gray icon"></i>
+        </button>
+        <button class="ui basic teal button icon" v-show="!todo.done" v-on:click="completeTodo" >
+          <i title="Mark complete" class="checkmark green icon"></i>
+        </button>
+        <button class='ui basic gray button icon' v-on:click="deleteTodo">
+          <i title="Delete todo" class="trash icon"></i>
+        </button>
       </div>
 
       <div class="ui form modify table-item" v-show="isEditing">
-        <button class="ui basic green button" v-on:click="hideForm">Done</button>
-        <button class="ui basic red button" v-on:click="cancelForm">Cancel &times;</button>
-      </div>
-
-      <div class="extra table-item">
-        <span class='trash icon' v-on:click="deleteTodo">
-          <i class='trash icon'></i>
-        </span>
+        <button class="ui basic green button icon" v-on:click="hideForm">
+          <i title="Save changes" class="send icon"></i>
+        </button>
+        <button class="ui basic pink button icon" v-on:click="cancelForm">
+          <i title="Cancel changes" class="ban icon"></i>
+        </button>
+        <button class='ui basic gray button icon' v-on:click="deleteTodo">
+          <i title="Delete todo" class="trash icon"></i>
+        </button>
       </div>
     </div>
   </div>
@@ -44,6 +48,11 @@
       return {
         isEditing: false,
       };
+    },
+    computed: {
+      doneClass() {
+        return this.todo.done ? 'is-done': 'is-pending';
+      },
     },
     methods: {
       showForm() {
@@ -86,6 +95,9 @@
     width: 100%;
     padding: 0.5rem;
   }
+  .table-row.is-done {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
   .table-item {
     display: flex;
     flex-flow: row nowrap;
@@ -101,10 +113,6 @@
   }
   .table-item.day {
     flex: 0 0 35px;
-    justify-content: center;
-  }
-  .table-item.extra {
-    flex: 0 0 20px;
     justify-content: center;
   }
 </style>
