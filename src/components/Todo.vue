@@ -63,6 +63,9 @@
       },
       hideForm() {
         this.isEditing = false;
+        if (this.todo.title !== this.currentTitle) {
+          this.$emit('update-todo', this.todo);
+        }
       },
       cancelForm() {
         if (this.currentTitle) {
@@ -75,9 +78,11 @@
       },
       completeTodo() {
         this.todo.done = true;
+        this.$emit('update-todo', this.todo);
       },
       resetTodo() {
         this.todo.done = false;
+        this.$emit('update-todo', this.todo);
       },
     },
   };

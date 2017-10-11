@@ -7,7 +7,10 @@
           <project-menu v-bind:projects='projects'></project-menu>
         </div>
         <div class='twelve wide column'>
-          <todo-list v-on:delete-todo='deleteTodo' v-bind:todos='currentTodos'></todo-list>
+          <todo-list
+            v-on:update-todo='updateTodo'
+            v-on:delete-todo='deleteTodo'
+            v-bind:todos='currentTodos'></todo-list>
           <create-todo v-on:add-todo='addTodo'></create-todo>
         </div>
       </div>
@@ -70,6 +73,12 @@ export default {
       const newTodo = { project, ...todo };
       log('adding todo', newTodo);
       db.addTodo(newTodo);
+    },
+
+    updateTodo(todo) {
+      return db.updateTodo(todo).then(() => {
+        log('updated todo', todo);
+      });
     },
 
     deleteTodo(todo) {

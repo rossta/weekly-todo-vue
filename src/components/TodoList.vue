@@ -12,6 +12,7 @@
         v-bind:todo="todo"
         v-bind:index="index"
         v-on:delete-todo='deleteTodo'
+        v-on:update-todo='updateTodo'
         >
       </todo>
     </div>
@@ -29,6 +30,9 @@ export default {
   methods: {
     deleteTodo(todo) {
       this.$emit('delete-todo', todo);
+    },
+    updateTodo(todo) {
+      this.$emit('update-todo', todo);
     },
   },
 };
