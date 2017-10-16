@@ -1,10 +1,5 @@
 <template>
   <div>
-    <p>
-      Completed tasks: {{todos.filter(todo => todo.done).length}}
-      &middot;
-      Pending tasks: {{todos.filter(todo => !todo.done).length}}
-    </p>
     <div class="todo-list table">
       <todo-list-todo
         v-for="(todo, index) in todos"
@@ -15,6 +10,11 @@
         v-on:update-todo='updateTodo'
         >
       </todo-list-todo>
+    </div>
+    <div class="table-row todo-list-stats">
+      Completed tasks: {{todos.filter(todo => todo.done).length}}
+      &middot;
+      Pending tasks: {{todos.filter(todo => !todo.done).length}}
     </div>
   </div>
 </template>

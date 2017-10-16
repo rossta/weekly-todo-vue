@@ -1,6 +1,6 @@
 <template>
-  <div class='ui vertical menu'>
-    <router-link v-for='project in projects' :to='project.name' class='item' active-class='active teal' :key='project.name'>
+  <div class='ui fluid demo tabular menu'>
+    <router-link v-for='project in projects' :to='project.name' class='item' active-class='active' :key='project.name'>
       {{project.title}}
       <div class='ui label'>{{project.pendingCount}}</div>
     </router-link>

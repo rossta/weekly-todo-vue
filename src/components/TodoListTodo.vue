@@ -101,6 +101,7 @@
     align-items: center;
     width: 100%;
     padding: 0.5rem;
+    min-height: 4em;
   }
   .table-row.is-done {
     background-color: rgba(0, 0, 0, 0.05);

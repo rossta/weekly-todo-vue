@@ -3,10 +3,8 @@
     <h1 class='centered'>{{ msg }}</h1>
     <div class='ui stackable very relaxed grid container'>
       <div class='three column computer one column mobile row'>
-        <div class='four wide column'>
+        <div class='sixteen wide column'>
           <project-menu v-bind:projects='projects'></project-menu>
-        </div>
-        <div class='twelve wide column'>
           <todo-list
             v-on:update-todo='updateTodo'
             v-on:delete-todo='deleteTodo'
