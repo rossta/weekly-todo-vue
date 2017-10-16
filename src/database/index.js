@@ -25,7 +25,7 @@ export function addTodo({ title, project, done = false }) {
 }
 
 export function getTodos() {
-  return db.allDocs({ include_docs: true, descending: false });
+  return db.allDocs({ include_docs: true, descending: true });
 }
 
 export function deleteTodo(todo) {

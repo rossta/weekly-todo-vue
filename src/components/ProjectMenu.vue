@@ -27,4 +27,8 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+  .tabular.menu {
+    margin-bottom: 0;
+  }
+</style>

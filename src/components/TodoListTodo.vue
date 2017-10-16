@@ -9,8 +9,6 @@
 
       <div class="title table-item" v-show="!isEditing" v-on:click="showForm">
         {{todo.title}}
-        &middot;
-        <span class="subtle">{{todo.project}}</span>
       </div>
       <div class="ui form title table-item" v-show="isEditing" v-on:keyup.enter="hideForm">
         <input type="text" v-model="todo.title" />
@@ -89,12 +87,6 @@
 </script>
 
 <style>
-  .todo {
-    border-bottom: 1px solid #CCC;
-  }
-  .todo:nth-child(1) {
-    border-top: 1px solid #CCC;
-  }
   .table-row {
     display: flex;
     flex-flow: row nowrap;
@@ -102,6 +94,7 @@
     width: 100%;
     padding: 0.5rem;
     min-height: 4em;
+    border-bottom: 1px solid #CCC;
   }
   .table-row.is-done {
     background-color: rgba(0, 0, 0, 0.05);

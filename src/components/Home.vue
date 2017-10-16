@@ -6,10 +6,10 @@
         <div class='sixteen wide column'>
           <project-menu v-bind:projects='projects'></project-menu>
           <todo-list
+            v-on:add-todo='addTodo'
             v-on:update-todo='updateTodo'
             v-on:delete-todo='deleteTodo'
             v-bind:todos='currentTodos'></todo-list>
-          <add-todo v-on:add-todo='addTodo'></add-todo>
         </div>
       </div>
     </div>
@@ -23,7 +23,6 @@ import * as db from '@/database';
 // import '@/database/seed';
 
 import TodoList from '@/components/TodoList';
-import AddTodo from '@/components/AddTodo';
 import ProjectMenu from '@/components/ProjectMenu';
 
 const log = debug('app:Home');
@@ -105,7 +104,6 @@ export default {
   },
   components: {
     TodoList,
-    AddTodo,
     ProjectMenu,
   },
 };
