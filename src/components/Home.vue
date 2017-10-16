@@ -18,6 +18,7 @@
 
 <script>
 import debug from 'debug';
+import { mapState } from 'vuex';
 
 import * as db from '@/database';
 // import '@/database/seed';
@@ -39,7 +40,6 @@ export default {
       filters: {
         done: false,
       },
-      todos: [],
     };
   },
   created() {
@@ -51,7 +51,11 @@ export default {
   },
   computed: {
     currentTodos() {
-      return this.projectTodos(this.project).filter(this.filterTodo.bind(this));
+      return this.currentProjectTodos.filter(this.filterTodo.bind(this));
+    },
+
+    currentProjectTodos() {
+      return this.projectTodos(this.project);
     },
 
     projects() {
@@ -65,6 +69,10 @@ export default {
       log('projects', props);
       return props;
     },
+
+    ...mapState({
+      todos: state => state.todos.all,
+    }),
   },
 
   methods: {
@@ -95,18 +103,13 @@ export default {
       return this.projectTodos(project).filter(todo => !todo.done).length;
     },
 
-    projectTodos(project) {
-      return this.todos.filter(todo => todo.project.toLowerCase() === project.toLowerCase());
-    },
-
     fetchTodos() {
       this.isLoading = true;
+      this.$store.dispatch('fetchTodos');
+    },
 
-      db.getTodos().then((doc) => {
-        const todos = doc.rows.map(row => row.doc);
-        log('fetched todos', todos);
-        this.todos = todos;
-      });
+    projectTodos(project) {
+      return this.$store.getters.projectTodos(project);
     },
   },
   components: {
