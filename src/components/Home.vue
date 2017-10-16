@@ -11,7 +11,7 @@
             v-on:update-todo='updateTodo'
             v-on:delete-todo='deleteTodo'
             v-bind:todos='currentTodos'></todo-list>
-          <create-todo v-on:add-todo='addTodo'></create-todo>
+          <add-todo v-on:add-todo='addTodo'></add-todo>
         </div>
       </div>
     </div>
@@ -25,7 +25,7 @@ import * as db from '@/database';
 // import '@/database/seed';
 
 import TodoList from '@/components/TodoList';
-import CreateTodo from '@/components/CreateTodo';
+import AddTodo from '@/components/AddTodo';
 import ProjectMenu from '@/components/ProjectMenu';
 
 const log = debug('app:Home');
@@ -107,7 +107,7 @@ export default {
   },
   components: {
     TodoList,
-    CreateTodo,
+    AddTodo,
     ProjectMenu,
   },
 };

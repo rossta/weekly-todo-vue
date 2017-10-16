@@ -6,7 +6,7 @@
       Pending tasks: {{todos.filter(todo => !todo.done).length}}
     </p>
     <div class="todo-list table">
-      <todo
+      <todo-list-todo
         v-for="(todo, index) in todos"
         :key="index"
         v-bind:todo="todo"
@@ -14,18 +14,18 @@
         v-on:delete-todo='deleteTodo'
         v-on:update-todo='updateTodo'
         >
-      </todo>
+      </todo-list-todo>
     </div>
   </div>
 </template>
 
 <script type="javascript">
-import Todo from '@/components/Todo';
+import TodoListTodo from '@/components/TodoListTodo';
 
 export default {
   props: ['todos'],
   components: {
-    Todo,
+    TodoListTodo,
   },
   methods: {
     deleteTodo(todo) {
