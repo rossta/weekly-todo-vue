@@ -36,6 +36,9 @@ export default {
     return {
       msg: 'Welcome to Your Week',
       isLoading: false,
+      filters: {
+        done: false,
+      },
       todos: [],
     };
   },
@@ -48,7 +51,7 @@ export default {
   },
   computed: {
     currentTodos() {
-      return this.projectTodos(this.project);
+      return this.projectTodos(this.project).filter(this.filterTodo.bind(this));
     },
 
     projects() {
@@ -65,6 +68,10 @@ export default {
   },
 
   methods: {
+    filterTodo(todo) {
+      return Object.entries(this.filters).every(([filter, val]) => todo[filter] === val);
+    },
+
     addTodo(todo) {
       const project = titleize(this.project);
       const newTodo = { project, ...todo };
