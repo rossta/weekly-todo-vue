@@ -5,6 +5,10 @@ const db = new PouchDB('weekly');
 
 const log = debug('app:database');
 
+export function get(...args) {
+  return db.get(...args);
+}
+
 function putTodo(todo) {
   return db.put(todo, (err, result) => {
     if (err) {
@@ -12,7 +16,7 @@ function putTodo(todo) {
     } else {
       log('Sucessfully saved a todo', result);
     }
-  });
+  }).then(response => get(response.id));
 }
 
 export function addTodo({ title, project, done = false }) {

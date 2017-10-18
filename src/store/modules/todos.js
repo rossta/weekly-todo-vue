@@ -26,15 +26,15 @@ const actions = {
   },
 
   addTodo({ commit }, todo) {
-    db.addTodo(todo).then((newTodo) => {
-      commit(types.DID_ADD_TODO, { newTodo });
+    db.addTodo(todo).then((t) => {
+      commit(types.DID_ADD_TODO, { todo: t });
     });
   },
 
   updateTodo({ commit }, todo) {
     log('updating todo', todo);
-    return db.updateTodo(todo).then(() => {
-      commit(types.DID_UPDATE_TODO, { todo });
+    return db.updateTodo(todo).then((t) => {
+      commit(types.DID_UPDATE_TODO, { todo: t });
     });
   },
 
@@ -55,8 +55,9 @@ const mutations = {
     state.all = [...todos];
   },
 
-  [types.DID_ADD_TODO](state, { newTodo }) {
-    log(types.DID_ADD_TODO, newTodo);
+  [types.DID_ADD_TODO](state, { todo }) {
+    log(types.DID_ADD_TODO, todo);
+    state.all = [todo, ...state.all];
   },
 
   [types.DID_UPDATE_TODO](state, { todo }) {
