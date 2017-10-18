@@ -11,7 +11,7 @@
         {{todo.title}}
       </div>
       <div class="ui form title table-item" v-show="isEditing" v-on:keyup.enter="hideForm">
-        <input type="text" v-model="todo.title" />
+        <input type="text" :value="title" @input=changeTitle />
       </div>
 
       <div class="modify table-item" v-show="!isEditing">
@@ -47,6 +47,7 @@
     data() {
       return {
         isEditing: false,
+        title: this.todo.title,
       };
     },
     computed: {
@@ -57,30 +58,40 @@
     methods: {
       showForm() {
         this.isEditing = true;
-        this.currentTitle = this.todo.title;
+        this.currentTitle = this.title;
       },
       hideForm() {
         this.isEditing = false;
-        if (this.todo.title !== this.currentTitle) {
-          this.$emit('update-todo', this.todo);
+        if (this.title !== this.currentTitle) {
+          const title = this.title;
+          this.updateTodo({ title });
         }
       },
       cancelForm() {
         if (this.currentTitle) {
-          this.todo.title = this.currentTitle;
+          this.title = this.currentTitle;
         }
         this.hideForm();
       },
-      deleteTodo() {
-        this.$emit('delete-todo', this.todo);
+      changeTodo(changes) {
+        this.$store.dispatch('changeTodo', { ...this.todo, ...changes });
+      },
+      updateTodo(changes) {
+        this.$store.dispatch('updateTodo', { ...this.todo, ...changes });
+      },
+      changeTitle(e) {
+        this.title = e.target.value;
       },
       completeTodo() {
-        this.todo.done = true;
-        this.$emit('update-todo', this.todo);
+        const done = true;
+        this.updateTodo({ done });
       },
       resetTodo() {
-        this.todo.done = false;
-        this.$emit('update-todo', this.todo);
+        const done = false;
+        this.updateTodo({ done });
+      },
+      deleteTodo() {
+        this.$store.dispatch('deleteTodo', this.todo);
       },
     },
   };

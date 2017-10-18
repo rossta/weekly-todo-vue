@@ -21,16 +21,54 @@ const actions = {
   fetchTodos({ commit }) {
     db.getTodos().then((doc) => {
       const todos = doc.rows.map(row => row.doc);
-      log('fetched todos', todos);
       commit(types.DID_FETCH_TODOS, { todos });
+    });
+  },
+
+  addTodo({ commit }, todo) {
+    db.addTodo(todo).then((newTodo) => {
+      commit(types.DID_ADD_TODO, { newTodo });
+    });
+  },
+
+  updateTodo({ commit }, todo) {
+    log('updating todo', todo);
+    return db.updateTodo(todo).then(() => {
+      commit(types.DID_UPDATE_TODO, { todo });
+    });
+  },
+
+  changeTodo({ commit }, todo) {
+    commit(types.DID_CHANGE_TODO, { todo });
+  },
+
+  deleteTodo({ commit }, todo) {
+    return db.deleteTodo(todo).then(() => {
+      commit(types.DID_DELETE_TODO, { todo });
     });
   },
 };
 
 const mutations = {
   [types.DID_FETCH_TODOS](state, { todos }) {
-    state.all = todos;
-    return state;
+    log(types.DID_FETCH_TODOS, todos);
+    state.all = [...todos];
+  },
+
+  [types.DID_ADD_TODO](state, { newTodo }) {
+    log(types.DID_ADD_TODO, newTodo);
+  },
+
+  [types.DID_UPDATE_TODO](state, { todo }) {
+    log('updated todo', todo);
+  },
+
+  [types.DID_DELETE_TODO](state, { todo }) {
+    log('deleted todo', todo);
+  },
+
+  [types.DID_CHANGE_TODO](state, { todo }) {
+    log('changed todo', todo);
   },
 };
 

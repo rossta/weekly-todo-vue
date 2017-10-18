@@ -7,8 +7,6 @@
           <project-menu v-bind:projects='projects'></project-menu>
           <todo-list
             v-on:add-todo='addTodo'
-            v-on:update-todo='updateTodo'
-            v-on:delete-todo='deleteTodo'
             v-bind:todos='currentTodos'></todo-list>
         </div>
       </div>
@@ -38,7 +36,7 @@ export default {
       msg: 'Welcome to Your Week',
       isLoading: false,
       filters: {
-        done: false,
+        // done: false,
       },
     };
   },
@@ -82,21 +80,8 @@ export default {
 
     addTodo(todo) {
       const project = titleize(this.project);
-      const newTodo = { project, ...todo };
-      log('adding todo', newTodo);
-      db.addTodo(newTodo);
-    },
 
-    updateTodo(todo) {
-      return db.updateTodo(todo).then(() => {
-        log('updated todo', todo);
-      });
-    },
-
-    deleteTodo(todo) {
-      return db.deleteTodo(todo).then(() => {
-        log('deleted todo', todo);
-      });
+      this.$store.dispatch('addTodo', { ...todo, project });
     },
 
     pendingProjectTodosCount(project) {

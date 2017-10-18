@@ -7,8 +7,6 @@
         :key="index"
         v-bind:todo="todo"
         v-bind:index="index"
-        v-on:delete-todo='deleteTodo'
-        v-on:update-todo='updateTodo'
         >
       </todo-list-todo>
       <div class="table-row todo-list-stats">
@@ -33,12 +31,6 @@ export default {
   methods: {
     addTodo(todo) {
       this.$emit('add-todo', todo);
-    },
-    deleteTodo(todo) {
-      this.$emit('delete-todo', todo);
-    },
-    updateTodo(todo) {
-      this.$emit('update-todo', todo);
     },
   },
 };
