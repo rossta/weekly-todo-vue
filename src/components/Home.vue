@@ -7,7 +7,7 @@
           <project-menu v-bind:projects='projects'></project-menu>
           <todo-list
             v-on:add-todo='addTodo'
-            v-bind:todos='currentTodos'></todo-list>
+            v-bind:project='project'></todo-list>
         </div>
       </div>
     </div>
@@ -18,7 +18,7 @@
 import debug from 'debug';
 import { mapState } from 'vuex';
 
-import * as db from '@/database';
+// import * as db from '@/database';
 // import '@/database/seed';
 
 import TodoList from '@/components/TodoList';
@@ -42,7 +42,7 @@ export default {
   },
   created() {
     this.fetchTodos();
-    db.onChange(() => this.fetchTodos());
+    // db.onChange(() => this.fetchTodos());
   },
   watch: {
     $route: 'fetchTodos',

@@ -11,7 +11,7 @@
         {{todo.title}}
       </div>
       <div class="ui form title table-item" v-show="isEditing" v-on:keyup.enter="hideForm">
-        <input type="text" :value="title" @input=changeTitle />
+        <input type="text" v-model="title" @input=changeTitle />
       </div>
 
       <div class="modify table-item" v-show="!isEditing">
@@ -43,14 +43,26 @@
 
 <script type="javascript">
   export default {
-    props: ['todo', 'index'],
+    props: ['id', 'index'],
     data() {
       return {
         isEditing: false,
-        title: this.todo.title,
+        inputTitle: undefined,
       };
     },
     computed: {
+      todo() {
+        return this.$store.getters.find(this.id);
+      },
+
+      title: {
+        get() {
+          return this.inputTitle || this.todo.title;
+        },
+        set(title) {
+          this.inputTitle = title;
+        },
+      },
       doneClass() {
         return this.todo.done ? 'is-done': 'is-pending';
       },

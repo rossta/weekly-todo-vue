@@ -8,8 +8,14 @@ const defaultState = {
   all: [],
 };
 
+function findIndex(state, todo) {
+  return state.all.findIndex(t => t._id === todo._id);
+}
+
 const getters = {
   allTodos: state => state.all,
+
+  find: state => id => state.all.find(t => t._id === id),
 
   projectTodos: state => (project) => {
     const projectName = project.toLowerCase();
@@ -32,7 +38,6 @@ const actions = {
   },
 
   updateTodo({ commit }, todo) {
-    log('updating todo', todo);
     return db.updateTodo(todo).then((t) => {
       commit(types.DID_UPDATE_TODO, { todo: t });
     });
@@ -62,10 +67,14 @@ const mutations = {
 
   [types.DID_UPDATE_TODO](state, { todo }) {
     log('updated todo', todo);
+    const index = findIndex(state, todo);
+    state.all.splice(index, 1, todo);
   },
 
   [types.DID_DELETE_TODO](state, { todo }) {
     log('deleted todo', todo);
+    const index = findIndex(state, todo);
+    state.all.splice(index, 1);
   },
 
   [types.DID_CHANGE_TODO](state, { todo }) {

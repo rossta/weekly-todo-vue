@@ -3,10 +3,9 @@
     <div class="todo-list table">
       <add-todo v-on:add-todo='addTodo'></add-todo>
       <todo-list-todo
-        v-for="(todo, index) in todos"
-        :key="index"
-        v-bind:todo="todo"
-        v-bind:index="index"
+        v-for="(_id, index) in todos.map(t => t._id)"
+        :key="_id"
+        v-bind:id="_id"
         >
       </todo-list-todo>
       <div class="table-row todo-list-stats">
@@ -23,11 +22,18 @@ import TodoListTodo from '@/components/TodoListTodo';
 import AddTodo from '@/components/AddTodo';
 
 export default {
-  props: ['todos'],
+  props: ['project'],
   components: {
     AddTodo,
     TodoListTodo,
   },
+
+  computed: {
+    todos() {
+      return this.$store.getters.projectTodos(this.project);
+    },
+  },
+
   methods: {
     addTodo(todo) {
       this.$emit('add-todo', todo);
