@@ -3,9 +3,9 @@
     <div class="todo-list table">
       <add-todo v-on:add-todo='addTodo'></add-todo>
       <todo-list-todo
-        v-for="(_id, index) in todos.map(t => t._id)"
-        :key="_id"
-        v-bind:id="_id"
+        v-for="(todo, index) in filteredTodos"
+        v-bind:todo=todo
+        :key="todo._id"
         >
       </todo-list-todo>
       <div class="table-row todo-list-stats">
@@ -18,8 +18,16 @@
 </template>
 
 <script type="javascript">
+import { mapGetters } from 'vuex';
+
 import TodoListTodo from '@/components/TodoListTodo';
 import AddTodo from '@/components/AddTodo';
+
+const filters = {
+  ALL: todos => todos,
+  ACTIVE: todos => todos.filter(todo => !todo.done),
+  COMPLETED: todos => todos.filter(todo => todo.done),
+};
 
 export default {
   props: ['project'],
@@ -28,10 +36,25 @@ export default {
     TodoListTodo,
   },
 
+  data() {
+    return {
+      filters,
+    }
+  },
+
   computed: {
-    todos() {
-      return this.$store.getters.projectTodos(this.project);
+    filteredTodos() {
+      const filter = 'ALL';
+      return filters[filter](this.todos);
     },
+
+    todos() {
+      return this.projectTodos(this.project);
+    },
+
+    ...mapGetters([
+      'projectTodos',
+    ]),
   },
 
   methods: {
@@ -43,8 +66,8 @@ export default {
 </script>
 
 <style scoped>
-  .table {
-    display: flex;
-    flex-flow: column nowrap;
-  }
+.table {
+  display: flex;
+  flex-flow: column nowrap;
+}
 </style>

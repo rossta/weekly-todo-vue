@@ -8,9 +8,9 @@ const defaultState = {
   all: [],
 };
 
-function findIndex(state, todo) {
-  return state.all.findIndex(t => t._id === todo._id);
-}
+const titleize = text => text[0].toUpperCase() + text.substr(1);
+
+const findIndex = (state, todo) => state.all.findIndex(t => t._id === todo._id);
 
 const getters = {
   allTodos: state => state.all,
@@ -23,6 +23,14 @@ const getters = {
   },
 
   projectNames: state => new Set(state.all.map(todo => todo.project.toLowerCase())),
+
+  projects: (state, getter) => {
+    return Array.from(getter.projectNames).map(name => ({
+      name,
+      path: `todos/${name}`,
+      title: titleize(name),
+    }));
+  },
 };
 
 const actions = {
@@ -39,14 +47,15 @@ const actions = {
     });
   },
 
-  updateTodo({ commit }, todo) {
-    return db.updateTodo(todo).then((t) => {
-      commit(types.DID_UPDATE_TODO, { todo: t });
+  updateTodo({ commit }, { todo, changes }) {
+    log('updateTodo', todo, changes);
+    return db.updateTodo({ ...todo, ...changes }).then(() => {
+      commit(types.DID_UPDATE_TODO, { todo, changes });
     });
   },
 
-  changeTodo({ commit }, todo) {
-    commit(types.DID_CHANGE_TODO, { todo });
+  changeTodo({ commit }, { todo, changes }) {
+    commit(types.DID_CHANGE_TODO, { todo, changes });
   },
 
   deleteTodo({ commit }, todo) {
@@ -67,10 +76,9 @@ const mutations = {
     state.all = [todo, ...state.all];
   },
 
-  [types.DID_UPDATE_TODO](state, { todo }) {
+  [types.DID_UPDATE_TODO](state, { todo, changes }) {
     log('updated todo', todo);
-    const index = findIndex(state, todo);
-    state.all.splice(index, 1, todo);
+    Object.assign(todo, changes);
   },
 
   [types.DID_DELETE_TODO](state, { todo }) {
@@ -79,8 +87,9 @@ const mutations = {
     state.all.splice(index, 1);
   },
 
-  [types.DID_CHANGE_TODO](state, { todo }) {
+  [types.DID_CHANGE_TODO](state, { todo, changes }) {
     log('changed todo', todo);
+    Object.assign(todo, changes);
   },
 };
 

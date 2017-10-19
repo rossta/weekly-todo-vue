@@ -15,29 +15,26 @@
 </template>
 
 <script>
-import debug from 'debug';
 import { mapGetters } from 'vuex';
 
 // import * as db from '@/database';
 // import '@/database/seed';
 
+import { titleize } from '@/utils';
 import TodoList from '@/components/TodoList';
 import ProjectMenu from '@/components/ProjectMenu';
-
-const log = debug('app:Home');
-
-const titleize = text => text[0].toUpperCase() + text.substr(1);
 
 export default {
   name: 'Home',
   props: ['project'],
+  components: {
+    TodoList,
+    ProjectMenu,
+  },
   data() {
     return {
       msg: 'Welcome to Your Week',
       isLoading: false,
-      filters: {
-        // done: false,
-      },
     };
   },
   created() {
@@ -48,57 +45,22 @@ export default {
   //   $route: 'fetchTodos',
   // },
   computed: {
-    currentTodos() {
-      return this.currentProjectTodos.filter(this.filterTodo.bind(this));
-    },
-
-    currentProjectTodos() {
-      return this.projectTodos(this.project);
-    },
-
-    projects() {
-      const props = Array.from(this.projectNames).map(name => ({
-        name,
-        path: `todos/${name}`,
-        title: titleize(name),
-        pendingCount: this.pendingProjectTodosCount(name),
-      }));
-      log('projects', props, this.projectNames);
-      return props;
-    },
-
     ...mapGetters([
-      'projectNames',
+      'projects',
     ]),
   },
 
   methods: {
-    filterTodo(todo) {
-      return Object.entries(this.filters).every(([filter, val]) => todo[filter] === val);
-    },
-
     addTodo(todo) {
       const project = titleize(this.project);
 
       this.$store.dispatch('addTodo', { ...todo, project });
     },
 
-    pendingProjectTodosCount(project) {
-      return this.projectTodos(project).filter(todo => !todo.done).length;
-    },
-
     fetchTodos() {
       this.isLoading = true;
       this.$store.dispatch('fetchTodos');
     },
-
-    projectTodos(project) {
-      return this.$store.getters.projectTodos(project);
-    },
-  },
-  components: {
-    TodoList,
-    ProjectMenu,
   },
 };
 </script>

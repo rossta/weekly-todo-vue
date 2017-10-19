@@ -2,7 +2,7 @@
   <div class='ui fluid demo tabular menu'>
     <router-link v-for='project in projects' :to='project.name' class='item' active-class='active' :key='project.name'>
       {{project.title}}
-      <div class='ui label'>{{project.pendingCount}}</div>
+      <div class='ui label'>{{pendingCount(project.name)}}</div>
     </router-link>
     <div class='item'>
       <div class='ui transparent icon input'>
@@ -14,6 +14,8 @@
 </template>
 
 <script type="text/javascript">
+import { mapGetters } from 'vuex';
+
 export default {
   props: {
     projects: {
@@ -23,6 +25,14 @@ export default {
 
   data() {
     return {};
+  },
+
+  methods: {
+    pendingCount(project) {
+      return this.$store.getters.projectTodos(project).filter(todo => !todo.done).length;
+    },
+
+    ...mapGetters(['projectTodos']),
   },
 };
 </script>

@@ -11,7 +11,7 @@
         {{todo.title}}
       </div>
       <div class="ui form title table-item" v-show="isEditing" v-on:keyup.enter="hideForm">
-        <input type="text" v-model="title" @input=changeTitle />
+        <input type="text" :value="todo.title" @input=changeTitle />
       </div>
 
       <div class="modify table-item" v-show="!isEditing">
@@ -43,7 +43,7 @@
 
 <script type="javascript">
   export default {
-    props: ['id', 'index'],
+    props: ['todo'],
     data() {
       return {
         isEditing: false,
@@ -51,10 +51,6 @@
       };
     },
     computed: {
-      todo() {
-        return this.$store.getters.find(this.id);
-      },
-
       title: {
         get() {
           return this.inputTitle || this.todo.title;
@@ -74,25 +70,21 @@
       },
       hideForm() {
         this.isEditing = false;
-        if (this.title !== this.currentTitle) {
-          const title = this.title;
+        if (this.todo.title !== this.currentTitle) {
+          const title = this.todo.title;
           this.updateTodo({ title });
         }
       },
       cancelForm() {
         if (this.currentTitle) {
-          this.title = this.currentTitle;
+          const title = this.currentTitle;
+          this.changeTodo({ title });
         }
         this.hideForm();
       },
-      changeTodo(changes) {
-        this.$store.dispatch('changeTodo', { ...this.todo, ...changes });
-      },
-      updateTodo(changes) {
-        this.$store.dispatch('updateTodo', { ...this.todo, ...changes });
-      },
       changeTitle(e) {
-        this.title = e.target.value;
+        const title = e.target.value.trim();
+        this.changeTodo({ title });
       },
       completeTodo() {
         const done = true;
@@ -101,6 +93,12 @@
       resetTodo() {
         const done = false;
         this.updateTodo({ done });
+      },
+      changeTodo(changes) {
+        this.$store.dispatch('changeTodo', { todo: this.todo, changes });
+      },
+      updateTodo(changes) {
+        this.$store.dispatch('updateTodo', { todo: this.todo, changes });
       },
       deleteTodo() {
         this.$store.dispatch('deleteTodo', this.todo);
