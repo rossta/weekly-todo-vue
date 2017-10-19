@@ -16,7 +16,7 @@
 
 <script>
 import debug from 'debug';
-import { mapState } from 'vuex';
+import { mapGetters } from 'vuex';
 
 // import * as db from '@/database';
 // import '@/database/seed';
@@ -44,9 +44,9 @@ export default {
     this.fetchTodos();
     // db.onChange(() => this.fetchTodos());
   },
-  watch: {
-    $route: 'fetchTodos',
-  },
+  // watch: {
+  //   $route: 'fetchTodos',
+  // },
   computed: {
     currentTodos() {
       return this.currentProjectTodos.filter(this.filterTodo.bind(this));
@@ -57,20 +57,19 @@ export default {
     },
 
     projects() {
-      const names = this.todos.map(todo => todo.project.toLowerCase());
-      const props = Array.from(new Set(names)).map(name => ({
+      const props = Array.from(this.projectNames).map(name => ({
         name,
         path: `todos/${name}`,
         title: titleize(name),
         pendingCount: this.pendingProjectTodosCount(name),
       }));
-      log('projects', props);
+      log('projects', props, this.projectNames);
       return props;
     },
 
-    ...mapState({
-      todos: state => state.todos.all,
-    }),
+    ...mapGetters([
+      'projectNames',
+    ]),
   },
 
   methods: {

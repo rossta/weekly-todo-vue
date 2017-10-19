@@ -21,6 +21,8 @@ const getters = {
     const projectName = project.toLowerCase();
     return state.all.filter(todo => todo.project.toLowerCase() === projectName);
   },
+
+  projectNames: state => new Set(state.all.map(todo => todo.project.toLowerCase())),
 };
 
 const actions = {
