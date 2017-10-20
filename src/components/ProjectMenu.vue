@@ -1,8 +1,24 @@
 <template>
-  <div class='ui fluid demo tabular menu'>
-    <router-link v-for='project in projects' :to='project.name' class='item' active-class='active' :key='project.name'>
+  <div class='ui fluid secondary menu'>
+    <router-link
+      v-for='project in projects'
+      :to='project.name'
+      class='item'
+      active-class='active'
+      :key='project.name'
+      >
       {{project.title}}
       <div class='ui label'>{{pendingCount(project.name)}}</div>
+    </router-link>
+    <div class="item"> &middot; </div>
+    <router-link
+      v-for='filter in filters'
+      :to='{ name: $route.name, query: queryFilter(filter) }'
+      class='item'
+      v-bind:class='[ isFilterQuery(filter) ? activeClass : "" ]'
+      :key='filter'
+      >
+      {{titleize(filter)}}
     </router-link>
     <div class='item'>
       <div class='ui transparent icon input'>
@@ -14,7 +30,7 @@
 </template>
 
 <script type="text/javascript">
-import { mapGetters } from 'vuex';
+import { titleize } from '@/utils';
 
 export default {
   props: {
@@ -24,15 +40,33 @@ export default {
   },
 
   data() {
-    return {};
+    return {
+      activeClass: 'active',
+      filters: ['active', 'completed', 'all'],
+    };
   },
 
   methods: {
+    titleize,
+
+    isFilterQuery(filter) {
+      if (this.$route.query.filter === undefined) {
+        return filter === 'all';
+      }
+      return this.$route.query.filter === filter;
+    },
+
+    queryFilter(filter) {
+      return Object.assign({}, this.$route.query, { filter });
+    },
+
+    queryDone(done) {
+      return Object.assign({}, this.$route.query, { done });
+    },
+
     pendingCount(project) {
       return this.$store.getters.projectTodos(project).filter(todo => !todo.done).length;
     },
-
-    ...mapGetters(['projectTodos']),
   },
 };
 </script>

@@ -8,11 +8,6 @@
         :key="todo._id"
         >
       </todo-list-todo>
-      <div class="table-row todo-list-stats">
-        Completed tasks: {{todos.filter(todo => todo.done).length}}
-        &middot;
-        Pending tasks: {{todos.filter(todo => !todo.done).length}}
-      </div>
     </div>
   </div>
 </template>
@@ -43,9 +38,13 @@ export default {
   },
 
   computed: {
+    filter() {
+      return this.$route.query.filter;
+    },
+
     filteredTodos() {
-      const filter = 'ALL';
-      return filters[filter](this.todos);
+      const filter = this.filter || 'ALL';
+      return filters[filter.toUpperCase()](this.todos);
     },
 
     todos() {
