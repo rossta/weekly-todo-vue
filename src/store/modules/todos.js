@@ -2,18 +2,18 @@ import debug from 'debug';
 import * as db from '@/database';
 import * as types from '@/store/types';
 
+import { titleize } from '@/utils';
+
 const log = debug('app:store/modules/todos');
 
 const defaultState = {
   all: [],
 };
 
-const titleize = text => text[0].toUpperCase() + text.substr(1);
-
 const findIndex = (state, todo) => state.all.findIndex(t => t._id === todo._id);
 
 const getters = {
-  allTodos: state => state.all,
+  all: state => state.all,
 
   find: state => id => state.all.find(t => t._id === id),
 
@@ -34,8 +34,8 @@ const getters = {
 };
 
 const actions = {
-  fetchTodos({ commit }) {
-    db.getTodos().then(todos => commit(types.DID_FETCH_TODOS, { todos }));
+  fetchTodos({ commit }, { now }) {
+    db.getTodos({ now }).then(todos => commit(types.DID_FETCH_TODOS, { todos }));
   },
 
   addTodo({ commit }, todo) {

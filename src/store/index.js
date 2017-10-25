@@ -5,6 +5,7 @@ import * as actions from './actions';
 import * as getters from './getters';
 
 import todos from './modules/todos';
+import dates from './modules/dates';
 
 Vue.use(Vuex);
 
@@ -15,6 +16,7 @@ export default new Vuex.Store({
   getters,
   modules: {
     todos,
+    dates,
   },
   strict: debug,
 });

@@ -26,6 +26,7 @@ const filters = {
 
 export default {
   props: ['project'],
+
   components: {
     AddTodo,
     TodoListTodo,

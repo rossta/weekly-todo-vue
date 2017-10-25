@@ -2,9 +2,14 @@
   <div class='weekly'>
     <h1 class='centered'>{{ msg }}</h1>
     <div class='ui stackable very relaxed grid container'>
-      <div class='three column computer one column mobile row'>
+      <div class="row">
         <div class='sixteen wide column'>
-          <project-menu v-bind:projects='projects'></project-menu>
+          <current-week></current-week>
+        </div>
+      </div>
+      <div class='row'>
+        <div class='sixteen wide column'>
+          <todo-filter-menu v-bind:projects='projects'></todo-filter-menu>
           <todo-list
             v-on:add-todo='addTodo'
             v-bind:project='project'></todo-list>
@@ -21,15 +26,18 @@ import { mapGetters } from 'vuex';
 // import '@/database/seed';
 
 import { titleize } from '@/utils';
+import CurrentWeek from '@/components/CurrentWeek';
 import TodoList from '@/components/TodoList';
-import ProjectMenu from '@/components/ProjectMenu';
+import TodoFilterMenu from '@/components/TodoFilterMenu';
 
 export default {
   name: 'Home',
   props: ['project'],
+
   components: {
+    CurrentWeek,
     TodoList,
-    ProjectMenu,
+    TodoFilterMenu,
   },
   data() {
     return {
@@ -46,6 +54,7 @@ export default {
   // },
   computed: {
     ...mapGetters([
+      'now',
       'projects',
     ]),
   },
@@ -59,7 +68,7 @@ export default {
 
     fetchTodos() {
       this.isLoading = true;
-      this.$store.dispatch('fetchTodos');
+      this.$store.dispatch('fetchTodos', { now: this.now });
     },
   },
 };

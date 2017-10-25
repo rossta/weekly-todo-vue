@@ -3,8 +3,10 @@ import debug from 'debug';
 import PouchDB from 'pouchdb';
 import PouchDBFind from 'pouchdb-find';
 
-import startOfWeek from 'date-fns/start_of_week';
-import endOfWeek from 'date-fns/end_of_week';
+import {
+  startOfWeek,
+  endOfWeek,
+} from '@/utils';
 
 PouchDB.plugin(PouchDBFind);
 
@@ -27,20 +29,28 @@ function putTodo(todo) {
 }
 
 export function addTodo({ title, project, done = false }) {
+  const type = 'todo';
   return putTodo({
     _id: new Date().toISOString(),
     title,
     project,
     done,
+    type,
   });
 }
 
-export function getTodos() {
-  const startDate = startOfWeek(new Date(), { weekStartsOn: 1 }).toISOString();
-  const endDate = endOfWeek(new Date(), { weekStartsOn: 1 }).toISOString();
+function queryTodos(query) {
+  return db.find(query).then(doc => doc.docs);
+}
+
+export function getTodos({ now = new Date() }) {
+  const startDate = startOfWeek(now).toISOString();
+  const endDate = endOfWeek(now).toISOString();
   log('getTodos', 'from', startDate, 'to', endDate);
-  return db.find({
+
+  return queryTodos({
     selector: {
+      type: 'todo',
       $or: [{
         _id: {
           $gte: startDate,
@@ -53,7 +63,7 @@ export function getTodos() {
     sort: [{
       _id: 'desc',
     }],
-  }).then(doc => doc.docs);
+  });
 }
 
 export function deleteTodo(todo) {
