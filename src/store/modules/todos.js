@@ -35,10 +35,7 @@ const getters = {
 
 const actions = {
   fetchTodos({ commit }) {
-    db.getTodos().then((doc) => {
-      const todos = doc.rows.map(row => row.doc);
-      commit(types.DID_FETCH_TODOS, { todos });
-    });
+    db.getTodos().then(todos => commit(types.DID_FETCH_TODOS, { todos }));
   },
 
   addTodo({ commit }, todo) {

@@ -1,5 +1,12 @@
-import PouchDB from 'pouchdb';
 import debug from 'debug';
+
+import PouchDB from 'pouchdb';
+import PouchDBFind from 'pouchdb-find';
+
+import startOfWeek from 'date-fns/start_of_week';
+import endOfWeek from 'date-fns/end_of_week';
+
+PouchDB.plugin(PouchDBFind);
 
 const db = new PouchDB('weekly');
 
@@ -29,7 +36,24 @@ export function addTodo({ title, project, done = false }) {
 }
 
 export function getTodos() {
-  return db.allDocs({ include_docs: true, descending: true });
+  const startDate = startOfWeek(new Date(), { weekStartsOn: 1 }).toISOString();
+  const endDate = endOfWeek(new Date(), { weekStartsOn: 1 }).toISOString();
+  log('getTodos', 'from', startDate, 'to', endDate);
+  return db.find({
+    selector: {
+      $or: [{
+        _id: {
+          $gte: startDate,
+          $lt: endDate,
+        },
+      }, {
+        done: false,
+      }],
+    },
+    sort: [{
+      _id: 'desc',
+    }],
+  }).then(doc => doc.docs);
 }
 
 export function deleteTodo(todo) {
@@ -51,3 +75,5 @@ export function onChange(callback) {
 export function destroy() {
   return db.destroy();
 }
+
+window.db = db;
