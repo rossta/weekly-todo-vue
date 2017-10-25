@@ -10,7 +10,6 @@ const defaultState = {
 const getters = {
   now: (state) => {
     const date = state.now || new Date();
-    debugger;
     return date;
   },
 };
