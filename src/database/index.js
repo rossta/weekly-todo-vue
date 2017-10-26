@@ -1,5 +1,4 @@
 import debug from 'debug';
-
 import PouchDB from 'pouchdb';
 import PouchDBFind from 'pouchdb-find';
 
@@ -8,11 +7,18 @@ import {
   endOfWeek,
 } from '@/utils';
 
+const log = debug('app:database');
+
 PouchDB.plugin(PouchDBFind);
 
 const db = new PouchDB('weekly');
+const remoteCouch = 'http://localhost:5984/weekly';
 
-const log = debug('app:database');
+export function sync() {
+  const opts = { live: true };
+  db.replicate.to(remoteCouch, opts);
+  db.replicate.from(remoteCouch, opts);
+}
 
 export function get(...args) {
   return db.get(...args);

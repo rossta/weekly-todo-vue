@@ -5,8 +5,14 @@
 </template>
 
 <script>
+import { sync } from '@/database';
+
 export default {
   name: 'app',
+
+  created() {
+    sync();
+  },
 };
 </script>
 
