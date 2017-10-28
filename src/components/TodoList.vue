@@ -1,14 +1,12 @@
 <template>
-  <div>
-    <div class="todo-list table">
-      <add-todo v-on:add-todo='addTodo'></add-todo>
-      <todo-list-todo
-        v-for="(todo, index) in filteredTodos"
-        v-bind:todo=todo
-        :key="todo._id"
-        >
-      </todo-list-todo>
-    </div>
+  <div class='todo-list table'>
+    <add-todo v-on:add-todo='addTodo'></add-todo>
+    <todo-list-todo
+      v-for='(todo, index) in filteredTodos'
+      v-bind:todo=todo
+      :key='todo._id'
+      >
+    </todo-list-todo>
   </div>
 </template>
 

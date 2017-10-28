@@ -1,40 +1,40 @@
 <template>
-  <div class="todo">
-    <div class="table-row" v-bind:class="[doneClass]">
-      <div class="day table-item">M</div>
-      <div class="day table-item">T</div>
-      <div class="day table-item">W</div>
-      <div class="day table-item">Th</div>
-      <div class="day table-item">F</div>
+  <div class='todo'>
+    <div class='table-row' v-bind:class='[doneClass]'>
+      <todo-week
+        class='day table-item'
+        v-bind:week='todo.week'
+        v-on:change='updateWeek'>
+      </todo-week>
 
-      <div class="title table-item" v-show="!isEditing" v-on:click="showForm">
+      <div class='title table-item' v-show='!isEditing' v-on:click='showForm'>
         {{todo.title}}
       </div>
-      <div class="ui form title table-item" v-show="isEditing" v-on:keyup.enter="hideForm">
-        <input type="text" :value="todo.title" @input=changeTitle />
+      <div class='ui form title table-item' v-show='isEditing' v-on:keyup.enter='hideForm'>
+        <input type='text' :value='todo.title' @input=changeTitle />
       </div>
 
-      <div class="modify table-item" v-show="!isEditing">
-        <button class="ui basic gray button icon" v-show="todo.done" v-on:click="resetTodo" >
-          <i title="Completed" class="checkmark gray icon"></i>
+      <div class='modify table-item' v-show='!isEditing'>
+        <button class='ui basic gray button icon' v-show='todo.done' v-on:click='resetTodo' >
+          <i title='Completed' class='checkmark gray icon'></i>
         </button>
-        <button class="ui basic teal button icon" v-show="!todo.done" v-on:click="completeTodo" >
-          <i title="Mark complete" class="checkmark green icon"></i>
+        <button class='ui basic teal button icon' v-show='!todo.done' v-on:click='completeTodo' >
+          <i title='Mark complete' class='checkmark green icon'></i>
         </button>
-        <button class='ui basic gray button icon' v-on:click="deleteTodo">
-          <i title="Delete todo" class="trash icon"></i>
+        <button class='ui basic gray button icon' v-on:click='deleteTodo'>
+          <i title='Delete todo' class='trash icon'></i>
         </button>
       </div>
 
-      <div class="ui form modify table-item" v-show="isEditing">
-        <button class="ui basic blue button icon" v-on:click="hideForm">
-          <i title="Save changes" class="send icon"></i>
+      <div class='ui form modify table-item' v-show='isEditing'>
+        <button class='ui basic blue button icon' v-on:click='hideForm'>
+          <i title='Save changes' class='send icon'></i>
         </button>
-        <button class="ui basic pink button icon" v-on:click="cancelForm">
-          <i title="Cancel changes" class="ban icon"></i>
+        <button class='ui basic pink button icon' v-on:click='cancelForm'>
+          <i title='Cancel changes' class='ban icon'></i>
         </button>
-        <button class='ui basic gray button icon' v-on:click="deleteTodo">
-          <i title="Delete todo" class="trash icon"></i>
+        <button class='ui basic gray button icon' v-on:click='deleteTodo'>
+          <i title='Delete todo' class='trash icon'></i>
         </button>
       </div>
     </div>
@@ -42,8 +42,15 @@
 </template>
 
 <script type="javascript">
+  import TodoWeek from '@/components/TodoWeek';
+
   export default {
     props: ['todo'],
+
+    components: {
+      TodoWeek,
+    },
+
     data() {
       return {
         isEditing: false,
@@ -62,12 +69,31 @@
       doneClass() {
         return this.todo.done ? 'is-done': 'is-pending';
       },
+
+      todoWeek() {
+        return new Set(this.todo.week || []);
+      }
     },
     methods: {
+      updateWeek(week) {
+        this.updateTodo({ week });
+      },
+
+      isDayOn(day) {
+        return this.todoWeek.has(day);
+      },
+
+      toggleDay(day) {
+        const week = this.todoWeek;
+        week.has(day) ? week.delete(day) : week.add(day);
+        this.updateTodo({ week: [...week] });
+      },
+
       showForm() {
         this.isEditing = true;
         this.currentTitle = this.title;
       },
+
       hideForm() {
         this.isEditing = false;
         if (this.todo.title !== this.currentTitle) {
@@ -75,6 +101,7 @@
           this.updateTodo({ title });
         }
       },
+
       cancelForm() {
         if (this.currentTitle) {
           const title = this.currentTitle;
@@ -82,6 +109,7 @@
         }
         this.hideForm();
       },
+
       changeTitle(e) {
         const title = e.target.value.trim();
         this.changeTodo({ title });

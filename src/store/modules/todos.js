@@ -46,8 +46,8 @@ const actions = {
 
   updateTodo({ commit }, { todo, changes }) {
     log('updateTodo', todo, changes);
-    return db.updateTodo({ ...todo, ...changes }).then(() => {
-      commit(types.DID_UPDATE_TODO, { todo, changes });
+    return db.updateTodo({ ...todo, ...changes }).then((update) => {
+      commit(types.DID_UPDATE_TODO, { todo, update });
     });
   },
 
@@ -73,9 +73,9 @@ const mutations = {
     state.all = [todo, ...state.all];
   },
 
-  [types.DID_UPDATE_TODO](state, { todo, changes }) {
-    log('updated todo', todo);
-    Object.assign(todo, changes);
+  [types.DID_UPDATE_TODO](state, { todo, update }) {
+    log('did todo', 'original', todo, 'update', update);
+    Object.assign(todo, update);
   },
 
   [types.DID_DELETE_TODO](state, { todo }) {
