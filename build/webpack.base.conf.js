@@ -24,6 +24,7 @@ module.exports = {
     alias: {
       'vue$': 'vue/dist/vue.esm.js',
       '@': resolve('src'),
+      '../../theme.config$': path.join(__dirname, '..', 'semantic-theme/theme.config'),
     }
   },
   module: {

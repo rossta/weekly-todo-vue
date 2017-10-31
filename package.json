@@ -18,6 +18,7 @@
     "debug": "^3.1.0",
     "pouchdb": "^6.3.4",
     "pouchdb-find": "^6.3.4",
+    "semantic-ui-less": "^2.2.12",
     "vue": "^2.4.2",
     "vue-router": "^2.7.0",
     "vuex": "^3.0.0"
@@ -63,6 +64,8 @@
     "karma-sourcemap-loader": "^0.3.7",
     "karma-spec-reporter": "0.0.31",
     "karma-webpack": "^2.0.2",
+    "less": "^2.7.3",
+    "less-loader": "^4.0.5",
     "mocha": "^3.2.0",
     "nightwatch": "^0.9.12",
     "opn": "^5.1.0",
