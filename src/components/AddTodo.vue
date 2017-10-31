@@ -1,21 +1,21 @@
 <template>
   <div class='add-todo todo' v-show='isCreating'>
     <div class='table-row'>
-      <div class='day table-item'>M</div>
-      <div class='day table-item'>T</div>
-      <div class='day table-item'>W</div>
-      <div class='day table-item'>Th</div>
-      <div class='day table-item'>F</div>
+      <todo-week
+        class='day table-item'
+        v-on:change='updateWeek'
+        v-bind:week='week'>
+      </todo-week>
 
-      <div class='ui form title table-item' v-on:keyup.enter='sendForm'>
+      <div class='ui form title table-item' v-on:keyup.enter='save'>
         <input v-model='titleText' type='text' ref='title' defaultValue=''>
       </div>
 
       <div class='modify table-item'>
-        <button class='ui basic blue button icon' v-on:click='sendForm'>
+        <button class='ui basic blue button icon' v-on:click='save'>
           <i title='Save changes' class='send icon'></i>
         </button>
-        <button class='ui basic red button icon' v-on:click='closeForm'>
+        <button class='ui basic red button icon' v-on:click='reset'>
           <i title='Cancel changes' class='ban icon'></i>
         </button>
       </div>
@@ -24,27 +24,44 @@
 </template>
 
 <script type="text/javascript">
+import TodoWeek from '@/components/TodoWeek';
+
 export default {
+  components: {
+    TodoWeek,
+  },
+
   data() {
     return {
       titleText: '',
+      week: [],
       isCreating: true,
     };
   },
+
   methods: {
     openForm() {
       this.isCreating = true;
     },
-    closeForm() {
+
+    reset() {
+      this.titleText = '';
+      this.week = [];
     },
-    sendForm() {
+
+    save() {
       if (this.titleText.length) {
         const title = this.titleText;
+        const week = this.week;
 
-        this.$emit('add-todo', { title });
+        this.$emit('add-todo', { title, week });
 
-        this.titleText = '';
+        this.reset();
       }
+    },
+
+    updateWeek(week) {
+      this.week = week;
     },
   },
 };

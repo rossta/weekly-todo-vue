@@ -34,13 +34,14 @@ function putTodo(todo) {
   }).then(response => get(response.id));
 }
 
-export function addTodo({ title, project, done = false }) {
+export function addTodo({ title, project, week, done = false }) {
   const type = 'todo';
   return putTodo({
     _id: new Date().toISOString(),
     title,
     project,
     done,
+    week,
     type,
   });
 }
