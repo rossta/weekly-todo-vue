@@ -1,18 +1,28 @@
 <template>
-  <button class='ui basic button icon'
-    v-bind:class='{ "purple primary" : isOn }'
+  <button class='ui button icon'
+    v-bind:class='[ colorClass, activeClass, todayClass ]'
     v-on:click='toggle'
-    >{{day}}</button>
+    >{{day.label}}</button>
 </template>
 
 <script type="text/javascript">
 export default {
-  name: 'DayToggle',
-  props: ['day', 'isOn'],
-
+  name: 'TodoWeekDay',
+  props: ['day', 'index', 'isOn', 'isToday'],
+  computed: {
+    colorClass() {
+      return this.isOn ? this.day.color : '';
+    },
+    activeClass() {
+      return this.isOn ? '' : 'basic';
+    },
+    todayClass() {
+      return this.isToday ? 'secondary' : '';
+    },
+  },
   methods: {
     toggle() {
-      this.$emit('toggle-day', this.day);
+      this.$emit('toggle-day', this.day.label);
     },
   },
 };

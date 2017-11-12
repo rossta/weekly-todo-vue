@@ -1,9 +1,11 @@
 <template>
   <div>
     <todo-week-day
-      v-for='day in weekDays'
-      :key='day'
+      v-for='(day, index) in daysOfWeek'
+      :key='index'
       :day='day'
+      :index='index'
+      :isToday='isToday(index)'
       v-bind:isOn='isDayOn(day)'
       v-on:toggle-day='toggleDay'
       class='day table-item'
@@ -14,12 +16,36 @@
 <script>
 import TodoWeekDay from '@/components/TodoWeekDay';
 
+const daysOfWeekData = [{
+  label: 'M',
+  color: 'red',
+}, {
+  label: 'T',
+  color: 'orange',
+}, {
+  label: 'W',
+  color: 'olive',
+}, {
+  label: 'R',
+  color: 'green',
+}, {
+  label: 'F',
+  color: 'blue',
+}, {
+  label: 'Sa',
+  color: 'violet',
+}, {
+  label: 'Su',
+  color: 'purple',
+}];
+
 export default {
   props: ['week'],
 
   data() {
     return {
-      weekDays: ['M', 'T', 'W', 'R', 'F'],
+      daysOfWeek: daysOfWeekData,
+      today: new Date(),
     };
   },
 
@@ -35,7 +61,12 @@ export default {
 
   methods: {
     isDayOn(day) {
-      return this.weekSet.has(day);
+      return this.weekSet.has(day.label);
+    },
+
+    // getDay is 1-indexed
+    isToday(index) {
+      return (this.today.getDay() - 1) === index;
     },
 
     toggleDay(day) {
