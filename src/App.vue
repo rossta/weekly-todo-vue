@@ -24,4 +24,15 @@ export default {
   color: #2c3e50;
   margin-top: 40px;
 }
+button.icon {
+  transition: all .2s ease;
+}
+button.icon:hover {
+  transform: scale(1.1);
+}
+i.icon, i.label {
+  font-style: normal;
+  width: 1em;
+  display: inherit;
+}
 </style>

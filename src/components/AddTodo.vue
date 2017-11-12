@@ -3,6 +3,7 @@
     <div class='table-row'>
       <todo-week
         class='day table-item'
+        :isHeader=true
         v-on:change='updateWeek'
         v-bind:week='week'>
       </todo-week>

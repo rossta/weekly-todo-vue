@@ -6,6 +6,7 @@
       :day='day'
       :index='index'
       :isToday='isToday(index)'
+      :isHeader=isHeader
       v-bind:isOn='isDayOn(day)'
       v-on:toggle-day='toggleDay'
       class='day table-item'
@@ -40,7 +41,7 @@ const daysOfWeekData = [{
 }];
 
 export default {
-  props: ['week'],
+  props: ['week', 'isHeader'],
 
   data() {
     return {
@@ -78,7 +79,9 @@ export default {
       }
       return this.$emit('change', [...week]);
     },
-
   },
 };
 </script>
+
+<style scoped>
+</style>
