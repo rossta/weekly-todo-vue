@@ -1,21 +1,21 @@
 <template>
   <div>
-    <todo-week-day
+    <todo-day
       v-for='(day, index) in daysOfWeek'
       :key='index'
       :day='day'
       :index='index'
       :isToday='isToday(index)'
       :isHeader=isHeader
-      v-bind:isOn='isDayOn(day)'
+      v-bind:isSelected='isDaySelected(day)'
       v-on:toggle-day='toggleDay'
       class='day table-item'
-      ></todo-week-day>
+      ></todo-day>
   </div>
 </template>
 
 <script>
-import TodoWeekDay from '@/components/TodoWeekDay';
+import TodoDay from '@/components/TodoDay';
 
 const daysOfWeekData = [{
   label: 'M',
@@ -51,7 +51,7 @@ export default {
   },
 
   components: {
-    TodoWeekDay,
+    TodoDay,
   },
 
   computed: {
@@ -61,13 +61,16 @@ export default {
   },
 
   methods: {
-    isDayOn(day) {
+    isDaySelected(day) {
       return this.weekSet.has(day.label);
     },
 
-    // getDay is 1-indexed
+    // getDay is 0-indexed where Sunday === 0
     isToday(index) {
-      return (this.today.getDay() - 1) === index;
+      const dayOfWeek = this.today.getDay() - 1;
+      return dayOfWeek < 0
+        ? index === (this.daysOfWeek.length - 1) // today is Sunday
+        : dayOfWeek === index;
     },
 
     toggleDay(day) {
