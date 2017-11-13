@@ -1,6 +1,6 @@
 <template>
   <div class='todo'>
-    <div class='table-row' v-bind:class='[doneClass]'>
+    <div class='table-row' v-bind:class='[ doneClass ]'>
       <todo-week
         class='day table-item'
         v-bind:week='todo.week'
@@ -21,6 +21,9 @@
         <button class='ui basic teal button icon' v-show='!todo.done' v-on:click='completeTodo' >
           <i title='Mark complete' class='checkmark green icon'></i>
         </button>
+        <router-link class='ui basic green button icon' :to='{ name: "edit-todo", params: { id: todo._id } }'>
+          <i title='Edit' class='edit icon'></i>
+        </router-link>
         <button class='ui basic gray button icon' v-on:click='deleteTodo'>
           <i title='Delete todo' class='trash icon'></i>
         </button>
@@ -66,13 +69,14 @@
           this.inputTitle = title;
         },
       },
+
       doneClass() {
         return this.todo.done ? 'is-done': 'is-pending';
       },
 
       todoWeek() {
         return new Set(this.todo.week || []);
-      }
+      },
     },
     methods: {
       updateWeek(week) {

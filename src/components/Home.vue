@@ -81,29 +81,29 @@ export default {
 
 <!-- Add 'scoped' attribute to limit CSS to this component only -->
 <style>
-  * {
-    /* font-family: 'Raleway', sans-serif; */
-  }
-  h1, h2 {
-    font-family: 'Signika', sans-serif;
-  }
+* {
+  /* font-family: 'Raleway', sans-serif; */
+}
+h1, h2 {
+  font-family: 'Signika', sans-serif;
+}
 
-  h1 {
-    margin-bottom: 2rem;
-    text-align: center;
-  }
+h1 {
+  margin-bottom: 2rem;
+  text-align: center;
+}
 
-  ul {
-    list-style-type: none;
-    padding: 0;
-  }
+ul {
+  list-style-type: none;
+  padding: 0;
+}
 
-  li {
-    display: inline-block;
-    margin: 0 10px;
-  }
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
 
-  a {
-    color: #42b983;
-  }
+a {
+  color: #42b983;
+}
 </style>

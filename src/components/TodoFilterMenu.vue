@@ -30,6 +30,7 @@
 </template>
 
 <script type="text/javascript">
+import { mapGetters } from 'vuex';
 import { titleize } from '@/utils';
 
 export default {
@@ -44,6 +45,10 @@ export default {
       activeClass: 'active',
       filters: ['active', 'completed', 'all'],
     };
+  },
+
+  computed: {
+    ...mapGetters(['projectTodos']),
   },
 
   methods: {
@@ -65,7 +70,7 @@ export default {
     },
 
     pendingCount(project) {
-      return this.$store.getters.projectTodos(project).filter(todo => !todo.done).length;
+      return this.projectTodos(project).filter(todo => !todo.done).length;
     },
   },
 };

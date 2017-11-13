@@ -7,6 +7,7 @@
       :key='todo._id'
       >
     </todo-list-todo>
+    <router-view></router-view>
   </div>
 </template>
 

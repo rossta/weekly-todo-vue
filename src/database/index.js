@@ -50,6 +50,20 @@ function queryTodos(query) {
   return db.find(query).then(doc => doc.docs);
 }
 
+export function getTodo({ id }) {
+  return db.find({
+    selector: {
+      type: 'todo',
+      _id: {
+        $eq: id,
+      },
+    },
+  }).then((doc) => {
+    const [first] = doc.docs;
+    return first;
+  });
+}
+
 export function getTodos({ now = new Date() }) {
   const startDate = startOfWeek(now).toISOString();
   const endDate = endOfWeek(now).toISOString();
