@@ -8,6 +8,7 @@ const log = debug('app:store/modules/todos');
 
 const defaultState = {
   all: [],
+  isLoading: false,
 };
 
 const findIndex = (state, todo) => state.all.findIndex(t => t._id === todo._id);
@@ -35,6 +36,7 @@ const getters = {
 
 const actions = {
   fetchTodos({ commit }, { now }) {
+    commit(types.IS_FETCHING_TODOS);
     db.getTodos({ now }).then(todos => commit(types.DID_FETCH_TODOS, { todos }));
   },
 
@@ -63,9 +65,14 @@ const actions = {
 };
 
 const mutations = {
+  [types.IS_FETCHING_TODOS](state) {
+    state.isLoading = true;
+  },
+
   [types.DID_FETCH_TODOS](state, { todos }) {
     log(types.DID_FETCH_TODOS, todos);
     state.all = [...todos];
+    state.isLoading = false;
   },
 
   [types.DID_ADD_TODO](state, { todo }) {

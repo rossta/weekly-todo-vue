@@ -7,7 +7,12 @@
           <current-week></current-week>
         </div>
       </div>
-      <div class='row'>
+      <div class='row' v-if='isLoading'>
+        <div class='sixteen wide column'>
+          Loading...
+        </div>
+      </div>
+      <div class='row' v-if='!isLoading'>
         <div class='sixteen wide column'>
           <todo-filter-menu v-bind:projects='projects'></todo-filter-menu>
           <todo-list
@@ -20,7 +25,7 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 
 // import * as db from '@/database';
 // import '@/database/seed';
@@ -42,7 +47,6 @@ export default {
   data() {
     return {
       msg: 'Welcome to Your Week',
-      isLoading: false,
     };
   },
   created() {
@@ -53,6 +57,9 @@ export default {
   //   $route: 'fetchTodos',
   // },
   computed: {
+    ...mapState({
+      isLoading: state => state.todos.isLoading,
+    }),
     ...mapGetters([
       'now',
       'projects',
@@ -62,12 +69,10 @@ export default {
   methods: {
     addTodo(todo) {
       const project = titleize(this.project);
-
       this.$store.dispatch('addTodo', { ...todo, project });
     },
 
     fetchTodos() {
-      this.isLoading = true;
       this.$store.dispatch('fetchTodos', { now: this.now });
     },
   },
