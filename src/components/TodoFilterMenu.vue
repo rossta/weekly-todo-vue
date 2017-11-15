@@ -31,7 +31,7 @@
 
 <script type="text/javascript">
 import { mapGetters } from 'vuex';
-import { titleize } from '@/utils';
+import { titleize } from '@/utils/strings';
 
 export default {
   props: {

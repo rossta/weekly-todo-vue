@@ -2,7 +2,7 @@ import debug from 'debug';
 import * as db from '@/database';
 import * as types from '@/store/types';
 
-import { titleize } from '@/utils';
+import { titleize } from '@/utils/strings';
 
 const log = debug('app:store/modules/todos');
 

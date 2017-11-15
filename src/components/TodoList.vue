@@ -1,12 +1,12 @@
 <template>
   <div class='todo-list table'>
-    <add-todo v-on:add-todo='addTodo'></add-todo>
-    <todo-list-todo
+    <todo-new-item v-on:add-todo='addTodo'></todo-new-item>
+    <todo-item
       v-for='(todo, index) in filteredTodos'
       v-bind:todo=todo
       :key='todo._id'
       >
-    </todo-list-todo>
+    </todo-item>
     <router-view></router-view>
   </div>
 </template>
@@ -14,8 +14,8 @@
 <script type="javascript">
 import { mapGetters } from 'vuex';
 
-import TodoListTodo from '@/components/TodoListTodo';
-import AddTodo from '@/components/AddTodo';
+import TodoItem from '@/components/TodoItem';
+import TodoNewItem from '@/components/TodoNewItem';
 
 const filters = {
   ALL: todos => todos,
@@ -27,8 +27,8 @@ export default {
   props: ['project'],
 
   components: {
-    AddTodo,
-    TodoListTodo,
+    TodoItem,
+    TodoNewItem,
   },
 
   data() {

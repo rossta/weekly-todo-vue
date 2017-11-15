@@ -3,26 +3,26 @@
 </template>
 
 <script>
-  import { format } from 'date-fns';
-  import { mapGetters } from 'vuex';
+import { format } from 'date-fns';
+import { mapGetters } from 'vuex';
 
-  import { startOfWeek } from '@/utils';
+import { startOfWeek } from '@/utils/dates';
 
-  export default {
-    computed: {
-      formattedWeek() {
-        return format(this.startOfWeek, 'MMM Do, YYYY');
-      },
-
-      startOfWeek() {
-        return startOfWeek(this.now);
-      },
-
-      ...mapGetters([
-        'now',
-      ]),
+export default {
+  computed: {
+    formattedWeek() {
+      return format(this.startOfWeek, 'MMM Do, YYYY');
     },
-  };
+
+    startOfWeek() {
+      return startOfWeek(this.now);
+    },
+
+    ...mapGetters([
+      'now',
+    ]),
+  },
+};
 </script>
 
 <style scoped>

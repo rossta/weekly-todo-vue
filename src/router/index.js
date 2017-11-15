@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import Home from '@/components/Home';
-import EditTodoModal from '@/components/EditTodoModal';
+import TodoEditModal from '@/components/TodoEditModal';
 
 Vue.use(Router);
 
@@ -20,7 +20,7 @@ export default new Router({
         {
           path: 'edit/:id',
           name: 'edit-todo',
-          component: EditTodoModal,
+          component: TodoEditModal,
         },
       ],
     },

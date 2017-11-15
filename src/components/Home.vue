@@ -30,7 +30,7 @@ import { mapGetters, mapState } from 'vuex';
 // import * as db from '@/database';
 // import '@/database/seed';
 
-import { titleize } from '@/utils';
+import { titleize } from '@/utils/strings';
 import CurrentWeek from '@/components/CurrentWeek';
 import TodoList from '@/components/TodoList';
 import TodoFilterMenu from '@/components/TodoFilterMenu';

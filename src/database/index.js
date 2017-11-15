@@ -5,7 +5,7 @@ import PouchDBFind from 'pouchdb-find';
 import {
   startOfWeek,
   endOfWeek,
-} from '@/utils';
+} from '@/utils/dates';
 
 const log = debug('app:database');
 
