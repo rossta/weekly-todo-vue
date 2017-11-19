@@ -1,20 +1,20 @@
 <template>
-  <base-modal
+  <ui-modal
     v-on:close='close'
     >
     <h2 slot='header'>Edit TODO</h2>
 
     {{todo.title}}
-  </base-modal>
+  </ui-modal>
 </template>
 
 <script type="text/javascript">
 import { mapGetters } from 'vuex';
-import BaseModal from './BaseModal';
+import UiModal from './UiModal';
 
 export default {
   components: {
-    BaseModal,
+    UiModal,
   },
 
   computed: {

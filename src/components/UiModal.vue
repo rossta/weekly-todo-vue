@@ -1,27 +1,25 @@
 <template>
-  <transition name='modal' @keyup.esc='close'>
+  <transition name='modal'>
     <div class='modal-mask' @click='close'>
       <div class='modal-wrapper'>
-        <div class='modal-container' @click.stop>
-
-          <div class='modal-header'>
+        <div class='ui active modal' @click.stop>
+          <div class='header'>
             <slot name='header'>
               default header
             </slot>
           </div>
 
-          <div class='modal-body'>
+          <div class='content'>
             <slot>
               default body
             </slot>
           </div>
 
-          <div class='modal-footer'>
+          <div class='actions'>
             <slot name='footer'>
-              default footer
-              <button class='modal-default-button' @click='close'>
-                OK
-              </button>
+              <div class='ui approve button'>Approve</div>
+              <div class='ui button'>Neutral</div>
+              <div class='ui cancel button'>Cancel</div>
             </slot>
           </div>
         </div>
@@ -31,11 +29,26 @@
 </template>
 
 <script type="text/javascript">
+const ESC = 27;
+
 export default {
   methods: {
     close() {
       this.$emit('close');
     },
+
+    escapeKeyListener(evt) {
+      if (evt.keyCode === ESC) {
+        this.$emit('close');
+      }
+    },
+  },
+  created() {
+    document.addEventListener('keyup', this.escapeKeyListener);
+  },
+
+  destroyed() {
+    document.removeEventListener('keyup', this.escapeKeyListener);
   },
 };
 </script>
@@ -58,38 +71,18 @@ export default {
   vertical-align: middle;
 }
 
-.modal-container {
-  width: 300px;
-  margin: 0px auto;
-  padding: 20px 30px;
-  background-color: #fff;
-  border-radius: 2px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, .33);
-  transition: all .3s ease;
-  font-family: Helvetica, Arial, sans-serif;
+.modal.ui {
+  top: 33%;
 }
 
-.modal-header h3 {
-  margin-top: 0;
-  color: #42b983;
-}
-
-.modal-body {
-  margin: 20px 0;
-}
-
-.modal-default-button {
-  float: right;
-}
-
-  /*
-   * The following styles are auto-applied to elements with
-   * transition="modal" when their visibility is toggled
-   * by Vue.js.
-   *
-   * You can easily play with the modal transition by editing
-   * these styles.
-   */
+/*
+ * The following styles are auto-applied to elements with
+ * transition="modal" when their visibility is toggled
+ * by Vue.js.
+ *
+ * You can easily play with the modal transition by editing
+ * these styles.
+ */
 
 .modal-enter {
   opacity: 0;
