@@ -7,15 +7,32 @@ import {
   endOfWeek,
 } from '@/utils/dates';
 
+import { hexEncode } from '@/utils/strings';
+
 const log = debug('app:database');
 
 PouchDB.plugin(PouchDBFind);
 
+const currentUser = {
+  id: '1234',
+  couchdbToken: 'couchdbToken',
+};
+
 const db = new PouchDB('weekly');
-const remoteCouch = 'http://localhost:5984/weekly';
+const remoteCouch = `${process.env.COUCHDB_URL}/userdb-${hexEncode(currentUser.id)}`;
 
 export function sync() {
-  const opts = { live: true };
+  const opts = {
+    live: true,
+    ajax: {
+      headers: {
+        'X-Auth-CouchDB-UserName': `${currentUser.id}`,
+        // 'X-Auth-CouchDB-Roles': 'users',
+        // 'X-Auth-CouchDB-Token': currentUser.couchdbToken,
+        // 'Content-Type': 'application/json; charset=utf-8',
+      },
+    },
+  };
   db.replicate.to(remoteCouch, opts);
   db.replicate.from(remoteCouch, opts);
 }
