@@ -1,0 +1,28 @@
+machine:
+  environment:
+    CIRCLE_BUILD_DIR: $HOME/$CIRCLE_PROJECT_REPONAME
+    PATH: $PATH:$CIRCLE_BUILD_DIR/bin:${HOME}/${CIRCLE_PROJECT_REPONAME}/node_modules/.bin"
+
+  post:
+    - mkdir -p $CIRCLE_BUILD_DIR/bin
+  node:
+    version: 8.9.1
+
+dependencies:
+  pre:
+    - go get -v github.com/bep/s3deploy
+  override:
+    - yarn
+  cache_directories:
+    - ~/.cache/yarn
+    - bin
+
+test:
+  override:
+    - yarn run build
+
+deployment:
+  s3up:
+    branch: master
+    commands:
+      - s3deploy -source=dist/ -region=us-west-2 -bucket=rossta-weekly-todos
