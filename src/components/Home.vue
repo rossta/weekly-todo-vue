@@ -81,9 +81,6 @@ export default {
 
 <!-- Add 'scoped' attribute to limit CSS to this component only -->
 <style>
-* {
-  /* font-family: 'Raleway', sans-serif; */
-}
 h1, h2 {
   font-family: 'Signika', sans-serif;
 }

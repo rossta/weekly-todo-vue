@@ -9,6 +9,7 @@ const log = debug('app:store/modules/todos');
 const defaultState = {
   all: [],
   isLoading: false,
+  projectNames: ['home', 'work'],
 };
 
 const findIndex = (state, todo) => state.all.findIndex(t => t._id === todo._id);
@@ -23,10 +24,8 @@ const getters = {
     return state.all.filter(todo => todo.project.toLowerCase() === projectName);
   },
 
-  projectNames: state => new Set(state.all.map(todo => todo.project.toLowerCase())),
-
-  projects: (state, getter) => {
-    return Array.from(getter.projectNames).map(name => ({
+  projects: (state) => {
+    return state.projectNames.map(name => ({
       name,
       path: `todos/${name}`,
       title: titleize(name),
