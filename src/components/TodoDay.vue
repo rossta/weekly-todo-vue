@@ -1,7 +1,7 @@
 <template>
   <button class='ui button icon'
     v-bind:class='[ uiClasses, { "is-header": isHeader } ]'
-    v-on:click='toggle'
+    @click='toggle'
     >
     <!-- <i v&#45;if='isSelected' class='icon chevron right'></i> -->
     <i class='label'>{{day.label}}</i>

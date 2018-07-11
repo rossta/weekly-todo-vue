@@ -16,7 +16,7 @@
         <div class='sixteen wide column'>
           <todo-filter-menu v-bind:projects='projects'></todo-filter-menu>
           <todo-list
-            v-on:add-todo='addTodo'
+            @add-todo='addTodo'
             v-bind:project='project'></todo-list>
         </div>
       </div>

@@ -4,39 +4,39 @@
       <todo-week
         class='day table-item'
         v-bind:week='todo.week'
-        v-on:change='updateWeek'>
+        @change='updateWeek'>
       </todo-week>
 
-      <div class='title table-item' v-show='!isEditing' v-on:click='showForm'>
+      <div class='title table-item' v-show='!isEditing' @click='showForm'>
         {{todo.title}}
       </div>
-      <div class='ui form title table-item' v-show='isEditing' v-on:keyup.enter='hideForm'>
+      <div class='ui form title table-item' v-show='isEditing' @keyup.enter='hideForm'>
         <input type='text' :value='todo.title' @input=changeTitle />
       </div>
 
       <div class='modify table-item' v-show='!isEditing'>
-        <button class='ui basic gray button icon' v-show='todo.done' v-on:click='resetTodo' >
+        <button class='ui basic gray button icon' v-show='todo.done' @click='resetTodo' >
           <i title='Completed' class='checkmark gray icon'></i>
         </button>
-        <button class='ui basic teal button icon' v-show='!todo.done' v-on:click='completeTodo' >
+        <button class='ui basic teal button icon' v-show='!todo.done' @click='completeTodo' >
           <i title='Mark complete' class='checkmark green icon'></i>
         </button>
         <router-link class='ui basic green button icon' :to='{ name: "edit-todo", params: { id: todo._id } }'>
           <i title='Edit' class='edit icon'></i>
         </router-link>
-        <button class='ui basic gray button icon' v-on:click='deleteTodo'>
+        <button class='ui basic gray button icon' @click='deleteTodo'>
           <i title='Delete todo' class='trash icon'></i>
         </button>
       </div>
 
       <div class='ui form modify table-item' v-show='isEditing'>
-        <button class='ui basic blue button icon' v-on:click='hideForm'>
+        <button class='ui basic blue button icon' @click='hideForm'>
           <i title='Save changes' class='send icon'></i>
         </button>
-        <button class='ui basic pink button icon' v-on:click='cancelForm'>
+        <button class='ui basic pink button icon' @click='cancelForm'>
           <i title='Cancel changes' class='ban icon'></i>
         </button>
-        <button class='ui basic gray button icon' v-on:click='deleteTodo'>
+        <button class='ui basic gray button icon' @click='deleteTodo'>
           <i title='Delete todo' class='trash icon'></i>
         </button>
       </div>

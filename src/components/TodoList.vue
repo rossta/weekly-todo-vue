@@ -1,6 +1,6 @@
 <template>
   <div class='todo-list table'>
-    <todo-new-item v-on:add-todo='addTodo'></todo-new-item>
+    <todo-new-item @add-todo='addTodo'></todo-new-item>
     <todo-item
       v-for='(todo, index) in filteredTodos'
       v-bind:todo=todo

@@ -8,7 +8,7 @@
       :isToday='isToday(index)'
       :isHeader=isHeader
       v-bind:isSelected='isDaySelected(day)'
-      v-on:toggle-day='toggleDay'
+      @toggle-day='toggleDay'
       class='day table-item'
       ></todo-day>
   </div>

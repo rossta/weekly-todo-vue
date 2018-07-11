@@ -1,6 +1,6 @@
 <template>
   <ui-modal
-    v-on:close='close'
+    @close='close'
     >
     <h2 slot='header'>Edit TODO</h2>
 

@@ -4,19 +4,19 @@
       <todo-week
         class='day table-item'
         :isHeader=true
-        v-on:change='updateWeek'
+        @change='updateWeek'
         v-bind:week='week'>
       </todo-week>
 
-      <div class='ui form title table-item' v-on:keyup.enter='save'>
+      <div class='ui form title table-item' @keyup.enter='save'>
         <input v-model='titleText' type='text' ref='title' defaultValue=''>
       </div>
 
       <div class='modify table-item'>
-        <button class='ui basic blue button icon' v-on:click='save'>
+        <button class='ui basic blue button icon' @click='save'>
           <i title='Save changes' class='send icon'></i>
         </button>
-        <button class='ui basic red button icon' v-on:click='reset'>
+        <button class='ui basic red button icon' @click='reset'>
           <i title='Cancel changes' class='ban icon'></i>
         </button>
       </div>
