@@ -1,6 +1,6 @@
 # weekly
 
-A weekly TODO list project in Vue.js inspired by the [@bluelahe](https://www.instagram.com/bluelahe) bullet journal described in [this BuzzFeed article](https://www.buzzfeed.com/rachelwmiller/this-running-weekly-to-do-list-setup-is-low-key-ge)
+A weekly TODO list project in Vue.js inspired by the bullet journal from [@bluelahe](https://www.instagram.com/bluelahe)  described in [this BuzzFeed article](https://www.buzzfeed.com/rachelwmiller/this-running-weekly-to-do-list-setup-is-low-key-ge)
 
 ## Demo
 
