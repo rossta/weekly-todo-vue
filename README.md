@@ -6,7 +6,7 @@ A TODO list project in Vue.js inspired by the weekly TODO bullet journal from [@
 
 The [demo site](https://quirky-mccarthy-91fc00.netlify.com/) contains the latest work-in-progress.
 
-[![screenshot]()](https://quirky-mccarthy-91fc00.netlify.com/)
+[![screenshot](./weekly-todo.png)](https://quirky-mccarthy-91fc00.netlify.com/)
 
 ## Build Setup
 
