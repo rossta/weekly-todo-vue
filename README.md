@@ -1,6 +1,12 @@
 # weekly
 
-> A Vue.js project
+A weekly TODO list project in Vue.js inspired by the approach  by [@bluelahe](https://www.instagram.com/bluelahe) described in [this BuzzFeed article](https://www.buzzfeed.com/rachelwmiller/this-running-weekly-to-do-list-setup-is-low-key-ge)
+
+## Demo
+
+The [demo site](https://quirky-mccarthy-91fc00.netlify.com/) contains the latest work-in-progress.
+
+[![screenshot]()](https://quirky-mccarthy-91fc00.netlify.com/)
 
 ## Build Setup
 
