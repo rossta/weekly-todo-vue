@@ -24,7 +24,12 @@ const filters = {
 };
 
 export default {
-  props: ['project'],
+  props: {
+    project: {
+      type: Object,
+      required: true,
+    }
+  },
 
   components: {
     TodoItem,

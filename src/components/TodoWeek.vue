@@ -41,7 +41,16 @@ const daysOfWeekData = [{
 }];
 
 export default {
-  props: ['week', 'isHeader'],
+  props: {
+    week: {
+      type: Array,
+      required: true,
+    },
+    isHeader: {
+      type: Boolean,
+      default: false,
+    },
+  },
 
   data() {
     return {

@@ -14,7 +14,7 @@
       </div>
       <div class='row' v-if='!isLoading'>
         <div class='sixteen wide column'>
-          <todo-filter-menu v-bind:projects='projects'></todo-filter-menu>
+          <todo-filter-menu></todo-filter-menu>
           <todo-list
             @add-todo='addTodo'
             v-bind:project='project'></todo-list>
@@ -37,7 +37,12 @@ import TodoFilterMenu from '@/components/TodoFilterMenu';
 
 export default {
   name: 'Home',
-  props: ['project'],
+  props: {
+    project: {
+      type: String,
+      required: true,
+    }
+  },
 
   components: {
     CurrentWeek,
@@ -62,7 +67,6 @@ export default {
     }),
     ...mapGetters([
       'now',
-      'projects',
     ]),
   },
 

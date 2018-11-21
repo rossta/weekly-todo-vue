@@ -48,7 +48,12 @@
   import TodoWeek from '@/components/TodoWeek';
 
   export default {
-    props: ['todo'],
+    props: {
+      todo: {
+        type: Object,
+        required: true,
+      }
+    },
 
     components: {
       TodoWeek,

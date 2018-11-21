@@ -12,7 +12,28 @@
 <script type="text/javascript">
 export default {
   name: 'TodoDay',
-  props: ['day', 'index', 'isSelected', 'isToday', 'isHeader'],
+  props: {
+    day: {
+      type: Object,
+      required: true,
+    },
+    index: {
+      type: Number,
+      required: true,
+    },
+    isSelected: {
+      type: Boolean,
+      required: true,
+    },
+    isToday: {
+      type: Boolean,
+      required: true,
+    },
+    isHeader: {
+      type: Boolean,
+      default: false,
+    }
+  },
   computed: {
     uiClasses() {
       return this.isSelected ? this.activeClasses : this.inactiveClasses;

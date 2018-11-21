@@ -34,12 +34,6 @@ import { mapGetters } from 'vuex';
 import { titleize } from '@/utils/strings';
 
 export default {
-  props: {
-    projects: {
-      default: [],
-    },
-  },
-
   data() {
     return {
       activeClass: 'active',
@@ -48,7 +42,7 @@ export default {
   },
 
   computed: {
-    ...mapGetters(['projectTodos']),
+    ...mapGetters(['projectTodos', 'projects']),
   },
 
   methods: {
