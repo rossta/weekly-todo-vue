@@ -2,7 +2,7 @@
   <div class='todo-list table'>
     <todo-new-item @add-todo='addTodo'></todo-new-item>
     <todo-item
-      v-for='(todo, index) in filteredTodos'
+      v-for='(todo) in filteredTodos'
       v-bind:todo=todo
       :key='todo._id'
       >
